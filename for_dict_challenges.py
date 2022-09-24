@@ -4,6 +4,8 @@
 # Вася: 1
 # Маша: 2
 # Петя: 2
+from collections import defaultdict
+
 
 students = [
     {'first_name': 'Вася'},
@@ -12,8 +14,15 @@ students = [
     {'first_name': 'Маша'},
     {'first_name': 'Петя'},
 ]
-# ???
 
+def count_students(students):
+    students_count = defaultdict(int)
+    for student in students:
+        name = student['first_name']
+        students_count[name] += 1
+    return students_count
+
+print(count_students(students))
 
 # Задание 2
 # Дан список учеников, нужно вывести самое часто повторящееся имя
@@ -26,7 +35,20 @@ students = [
     {'first_name': 'Маша'},
     {'first_name': 'Оля'},
 ]
-# ???
+students_count = count_students(students)
+max_name = max(students_count, key=students_count.get)
+
+def get_max_student_count(students):
+    students_count = defaultdict(int)
+    max_count = 0
+    max_name = ''
+    for student in students:
+        name = student['first_name']
+        students_count[name] += 1
+        if students_count[name] > max_count:
+            max_count = students_count[name]
+            max_name = name
+    return max_name
 
 
 # Задание 3
@@ -51,7 +73,11 @@ school_students = [
         {'first_name': 'Саша'},
     ],
 ]
-# ???
+def get_most_frequent_name_for_class(school_students):
+    for class_ in school_students:
+        print(get_max_student_count(class_))
+
+get_most_frequent_name_for_class(school_students)
 
 
 # Задание 4
@@ -72,7 +98,17 @@ is_male = {
     'Миша': True,
     'Даша': False,
 }
-# ???
+for class_ in school:
+    class_name = class_['class']
+    male_count = 0
+    female_count = 0
+    for student in class_['students']:
+        name = student['first_name']
+        if is_male[name]:
+            male_count += 1
+        else:
+            female_count += 1
+    print(f'В классе {class_name}: {male_count} мальчиков и {female_count} девочек')
 
 
 # Задание 5
